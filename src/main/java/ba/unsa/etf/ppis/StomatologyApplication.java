@@ -35,7 +35,7 @@ public class StomatologyApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// prvi clanak
-		Article article = new Article();
+		/*Article article = new Article();
 		article.setId("aaaaaaaa");
 		article.setAuthor("9d0d4a57-8623-4686-9d2f-06c2640c78c8");
 		article.setTitle("Ovo je NWT projekat.");
@@ -61,7 +61,7 @@ public class StomatologyApplication implements CommandLineRunner {
 		videoRepo.save(videoSection);
 		imageSection.setArticle(article);
 		imageRepo.save(imageSection);
-
+*/
 		// drugi clanak
 //		Article article2 = new Article();
 //		article2.setAuthor("0dbac29d-a95c-42cd-bc0d-6809cad9e4fb");
