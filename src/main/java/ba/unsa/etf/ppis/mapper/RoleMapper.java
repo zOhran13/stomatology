@@ -6,7 +6,7 @@ import ba.unsa.etf.ppis.dto.RoleDto;
 
 public class RoleMapper {
     public static RoleDto toRoleDto(Role roleEntity) {
-        return new RoleDto(roleEntity.getName());
+        return new RoleDto(roleEntity.getRoleId(),roleEntity.getName());
     }
 
     public static Role toRoleEntity(RoleDto roleDto) {

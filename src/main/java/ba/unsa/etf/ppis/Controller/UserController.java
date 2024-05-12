@@ -66,9 +66,9 @@ public class UserController {
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteUserByEmail(@RequestBody UserDto userDto) {
+    public ResponseEntity<Void> deleteUserByEmail(@RequestBody String email) {
 
-        userService.deleteUser(userDto);
+        userService.deleteUser(email);
         return ResponseEntity.noContent().build(); // User deleted successfully
 
     }

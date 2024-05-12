@@ -115,12 +115,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void deleteUser(UserDto userDto) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(userDto.getEmail());
+    public void deleteUser(String email) {
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             userRepository.delete(optionalUser.get());
         } else {
-            throw new UserNotFoundException("User not found with email: " + userDto.getEmail());
+            throw new UserNotFoundException("User not found with email: " + email);
         }
     }
 
