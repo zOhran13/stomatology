@@ -1,5 +1,6 @@
 package ba.unsa.etf.ppis.dto;
 
+import ba.unsa.etf.ppis.Model.Role;
 import lombok.*;
 
 @Setter
@@ -9,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+    private Role role;
     private String type;
     private String name;
     private String email;

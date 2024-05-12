@@ -46,8 +46,8 @@ public class UserEntity {
 
     }
 
-    public UserEntity(String type, String email, String name, String passwordHash) {
-
+    public UserEntity(Role role, String type, String email, String name, String passwordHash) {
+        this.role=role;
         this.email = email;
         this.name = name;
         this.passwordHash = passwordHash;
