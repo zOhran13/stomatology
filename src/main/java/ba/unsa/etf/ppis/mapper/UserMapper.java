@@ -34,9 +34,9 @@ public class UserMapper {
     public UserEntity mapToUser(UserDto userDto){
         UserEntity user = new UserEntity(
                 roleRepository.findById(userDto.getRoleId()).orElse(null),
-                userDto.getName(),
                 userDto.getType(),
                 userDto.getEmail(),
+                userDto.getName(),
                 userDto.getPasswordHash()
         );
         return user;
