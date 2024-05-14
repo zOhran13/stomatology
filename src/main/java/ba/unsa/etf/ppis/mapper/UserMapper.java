@@ -21,8 +21,8 @@ public class UserMapper {
         String roleId = user.getRole() != null ? user.getRole().getRoleId() : null;
         UserDto userDto = new UserDto(
                roleId,
-                user.getName(),
                 user.getType(),
+                user.getName(),
                 user.getEmail(),
                 user.getPasswordHash(),
                 user.getUserId()
@@ -34,9 +34,9 @@ public class UserMapper {
     public UserEntity mapToUser(UserDto userDto){
         UserEntity user = new UserEntity(
                 roleRepository.findById(userDto.getRoleId()).orElse(null),
+                userDto.getName(),
                 userDto.getType(),
                 userDto.getEmail(),
-                userDto.getName(),
                 userDto.getPasswordHash()
         );
         return user;
