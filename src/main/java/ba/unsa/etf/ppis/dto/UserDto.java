@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private Role role;
+    private String roleId;
     private String type;
     private String name;
     private String email;

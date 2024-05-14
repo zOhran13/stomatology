@@ -66,7 +66,7 @@ public class UserController {
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteUserByEmail(@RequestBody String email) {
+    public ResponseEntity<Void> deleteUserByEmail(@RequestParam String email) {
 
         userService.deleteUser(email);
         return ResponseEntity.noContent().build(); // User deleted successfully

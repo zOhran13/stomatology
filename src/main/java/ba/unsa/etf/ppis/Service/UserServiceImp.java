@@ -1,6 +1,7 @@
 package ba.unsa.etf.ppis.Service;
 
 import ba.unsa.etf.ppis.Model.UserEntity;
+import ba.unsa.etf.ppis.Repository.RoleRepository;
 import ba.unsa.etf.ppis.Repository.UserRepository;
 import ba.unsa.etf.ppis.dto.UserDto;
 import ba.unsa.etf.ppis.exceptions.InvalidFormatException;
@@ -21,13 +22,14 @@ public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final UserMapper userMapper;
 
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class UserServiceImp implements UserService {
             throw new InvalidFormatException("Invalid email format.");
         }
 
-        UserEntity user = UserMapper.mapToUser(userDto);
+        UserEntity user = userMapper.mapToUser(userDto);
         user.setPasswordHash(passwordEncoder.encode(password));
 
         UserEntity savedUser = userRepository.save(user);

@@ -1,5 +1,6 @@
 package ba.unsa.etf.ppis.Model;
 
+import ba.unsa.etf.ppis.Service.RoleServiceImpl;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,7 +48,7 @@ public class UserEntity {
     }
 
     public UserEntity(Role role, String type, String email, String name, String passwordHash) {
-        this.role=role;
+        this.role= role;
         this.email = email;
         this.name = name;
         this.passwordHash = passwordHash;
