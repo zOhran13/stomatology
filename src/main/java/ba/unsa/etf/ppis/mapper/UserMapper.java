@@ -21,9 +21,9 @@ public class UserMapper {
         String roleId = user.getRole() != null ? user.getRole().getRoleId() : null;
         UserDto userDto = new UserDto(
                roleId,
-                user.getName(),
                 user.getType(),
                 user.getEmail(),
+                user.getName(),
                 user.getPasswordHash(),
                 user.getUserId()
         );
