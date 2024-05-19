@@ -36,7 +36,7 @@ public class JwtTokenHelper {
                 .signWith(key).compact();
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, String role) {
         Date now = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
@@ -49,6 +49,7 @@ public class JwtTokenHelper {
                 .subject(username)
                 .issuedAt(now)
                 .expiration(expirationDate)
+                .claim("role", role)
                 .signWith(key).compact();
     }
 
