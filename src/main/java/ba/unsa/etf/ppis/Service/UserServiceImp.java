@@ -1,7 +1,6 @@
 package ba.unsa.etf.ppis.Service;
 
-import ba.unsa.etf.ppis.Model.UserEntity;
-import ba.unsa.etf.ppis.Repository.RoleRepository;
+import ba.unsa.etf.ppis.Model.User;
 import ba.unsa.etf.ppis.Repository.UserRepository;
 import ba.unsa.etf.ppis.dto.UserDto;
 import ba.unsa.etf.ppis.exceptions.InvalidFormatException;
@@ -39,10 +38,7 @@ public class UserServiceImp implements UserService {
             throw new UserAlreadyExistsException("User with email '" + email + "' already exists.");
         }
 
-
-
-
-        String password = userDto.getPasswordHash();
+        String password = userDto.getPassword();
         if (isPasswordValid(password)) {
             throw new InvalidFormatException("Invalid password. Password must meet policy requirements.");
         }
@@ -51,17 +47,13 @@ public class UserServiceImp implements UserService {
             throw new InvalidFormatException("Invalid email format.");
         }
 
-        UserEntity user = userMapper.mapToUser(userDto);
-        user.setPasswordHash(passwordEncoder.encode(password));
+        User user = userMapper.mapToUser(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        UserEntity savedUser = userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         return UserMapper.mapToUserDto(savedUser);
     }
-
-
-
-
 
     private boolean isPasswordValid(String password) {
 
@@ -75,9 +67,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        Iterable<UserEntity> users = userRepository.findAll();
+        Iterable<User> users = userRepository.findAll();
         List<UserDto> userDtos = new ArrayList<>();
-        for (UserEntity userEntity : users) {
+        for (User userEntity : users) {
             userDtos.add(UserMapper.mapToUserDto(userEntity));
         }
         return userDtos;
@@ -85,16 +77,16 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto getUserByEmail(String email) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
-            UserEntity user = optionalUser.get();
+            User user = optionalUser.get();
             return UserMapper.mapToUserDto(user);
         }
         throw new UserNotFoundException("User not found with email: " + email);
     }
     @Override
     public UserDto getUserById(String id) {
-        UserEntity user = userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
 
         return UserMapper.mapToUserDto(user);
@@ -102,13 +94,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto, String email) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
-            UserEntity user = optionalUser.get();
+            User user = optionalUser.get();
             user.setType(userDto.getType());
             user.setName(userDto.getName());
-            user.setPasswordHash(passwordEncoder.encode(userDto.getPasswordHash()));
-            UserEntity updatedUser = userRepository.save(user);
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            User updatedUser = userRepository.save(user);
 
 
             return UserMapper.mapToUserDto(updatedUser);
@@ -118,7 +110,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void deleteUser(String email) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             userRepository.delete(optionalUser.get());
         } else {
@@ -128,7 +120,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<UserDto> searchUsersByName(String name) {
-        List<UserEntity> users = userRepository.findByNameContainingIgnoreCase(name);
+        List<User> users = userRepository.findByNameContainingIgnoreCase(name);
         return users.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 

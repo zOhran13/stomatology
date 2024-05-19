@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/create")
+@RequestMapping("/role")
 public class RoleController {
 
     private final RoleService roleService;
@@ -25,12 +25,10 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRole);
     }
 
-    @GetMapping("/roles")
+    @GetMapping("/all")
     public ResponseEntity<List<RoleDto>> getAllRoles() {
         List<RoleDto> roles = roleService.getAllRoles();
         return ResponseEntity.ok(roles);
     }
-
-
 
 }

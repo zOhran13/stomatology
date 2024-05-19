@@ -1,6 +1,5 @@
 package ba.unsa.etf.ppis.Model;
 
-import ba.unsa.etf.ppis.Service.RoleServiceImpl;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +10,7 @@ import lombok.*;
 
 @Table(name = "user")
 @Entity // This tells Hibernate to make a table out of this class
-public class UserEntity {
+public class User {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,7 +19,7 @@ public class UserEntity {
     @Setter
     @Getter
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
@@ -41,17 +40,17 @@ public class UserEntity {
     @Setter
     @Getter
     @Column(name = "passwordHash", columnDefinition = "VARCHAR(256)")
-    private String passwordHash;
+    private String password;
 
-    public UserEntity() {
+    public User() {
 
     }
 
-    public UserEntity(Role role, String type, String email, String name, String passwordHash) {
+    public User(Role role, String type, String email, String name, String password) {
         this.role= role;
         this.email = email;
         this.name = name;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.type = type;
     }
 
@@ -64,7 +63,7 @@ public class UserEntity {
                 ", type=" +type+ '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", passwordHash='" + passwordHash + '\'' +
+                ", passwordHash='" + password + '\'' +
                 '}';
     }
 }
