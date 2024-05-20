@@ -42,6 +42,7 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests((authorizeHttpRequests) -> {
                     authorizeHttpRequests.requestMatchers("/auth/**").permitAll();
+                    authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/role/all").permitAll();
                     authorizeHttpRequests.requestMatchers("/role/**").hasAuthority(UserRoles.admin);
                     authorizeHttpRequests.requestMatchers("/user/**").hasAuthority(UserRoles.admin);
                     authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/articles/**").authenticated();
