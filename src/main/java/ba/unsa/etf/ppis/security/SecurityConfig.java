@@ -41,15 +41,17 @@ public class SecurityConfig {
                     sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .authorizeHttpRequests((authorizeHttpRequests) -> {
-                    authorizeHttpRequests.requestMatchers("/auth/**").permitAll();
-                    authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/role/all").permitAll();
-                    authorizeHttpRequests.requestMatchers("/role/**").hasAuthority(UserRoles.admin);
-                    authorizeHttpRequests.requestMatchers("/user/**").hasAuthority(UserRoles.admin);
-                    authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/articles/**").authenticated();
-                    authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/articles/**").hasAuthority(UserRoles.admin);
-                    authorizeHttpRequests.requestMatchers(HttpMethod.PUT, "/articles/**").hasAuthority(UserRoles.admin);
-                    authorizeHttpRequests.requestMatchers(HttpMethod.DELETE, "/articles/**").hasAuthority(UserRoles.admin);
-                    authorizeHttpRequests.anyRequest().authenticated();
+                    authorizeHttpRequests.anyRequest().permitAll();
+//                    authorizeHttpRequests.requestMatchers("/auth/**").permitAll();
+//                    authorizeHttpRequests.requestMatchers("/backup").permitAll();
+//                    authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/role/all").permitAll();
+//                    authorizeHttpRequests.requestMatchers("/role/**").hasAuthority(UserRoles.admin);
+//                    authorizeHttpRequests.requestMatchers("/user/**").hasAuthority(UserRoles.admin);
+//                    authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/articles/**").authenticated();
+//                    authorizeHttpRequests.requestMatchers(HttpMethod.POST, "/articles/**").hasAuthority(UserRoles.admin);
+//                    authorizeHttpRequests.requestMatchers(HttpMethod.PUT, "/articles/**").hasAuthority(UserRoles.admin);
+//                    authorizeHttpRequests.requestMatchers(HttpMethod.DELETE, "/articles/**").hasAuthority(UserRoles.admin);
+//                    authorizeHttpRequests.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
