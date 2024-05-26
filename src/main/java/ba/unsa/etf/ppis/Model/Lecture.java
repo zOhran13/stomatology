@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Table(name = "lecture")
 @Entity
 public class Lecture {
@@ -20,6 +22,10 @@ public class Lecture {
     @Getter
     @Column(name = "details", columnDefinition = "VARCHAR(64)")
     private String details;
+    @Getter
+    @Setter
+    @Column(name = "date")
+    private LocalDateTime date;
     @Setter
     @Getter
     @Column(name = "location", columnDefinition = "VARCHAR(64)")
@@ -33,6 +39,12 @@ public class Lecture {
     @ManyToOne
     @JoinColumn(name = "lecturetype_id", referencedColumnName = "type_id")
     private TypeOfLecture typeOfLecture;
+    @Setter
+    @Getter
+    @Column(name = "speaker_id", columnDefinition = "VARCHAR(64)")
+    private String speakerId;
+
+    // TODO Retrieve collection of all lecture attendants
 
 }
 
