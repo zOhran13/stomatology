@@ -1,7 +1,11 @@
 package ba.unsa.etf.ppis.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -41,6 +45,10 @@ public class User {
     @Getter
     @Column(name = "passwordHash", columnDefinition = "VARCHAR(256)")
     private String password;
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "attendants")
+    private Set<Lecture> lectures = new HashSet<>();
 
     public User() {
 

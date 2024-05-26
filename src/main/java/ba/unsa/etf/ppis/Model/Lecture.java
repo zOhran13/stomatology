@@ -1,10 +1,16 @@
 package ba.unsa.etf.ppis.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Table(name = "lecture")
 @Entity
@@ -45,6 +51,15 @@ public class Lecture {
     private String speakerId;
 
     // TODO Retrieve collection of all lecture attendants
-
+    @Getter
+    @Setter
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(
+            name = "userslecture",
+            joinColumns = @JoinColumn(name = "lecture_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> attendants = new HashSet<>();
 }
 

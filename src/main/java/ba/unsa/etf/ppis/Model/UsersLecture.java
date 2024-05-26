@@ -1,5 +1,6 @@
 package ba.unsa.etf.ppis.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.api.client.util.DateTime;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,12 +16,14 @@ public class UsersLecture {
     @Column(name = "userslecture_id", columnDefinition = "VARCHAR(64)")
     private String userslectureId;
 
+    @JsonIgnore
     @Setter
     @Getter
     @ManyToOne
     @JoinColumn(name = "lecture_id", referencedColumnName = "lecture_id")
     private Lecture lecture;
 
+    @JsonIgnore
     @Setter
     @Getter
     @ManyToOne

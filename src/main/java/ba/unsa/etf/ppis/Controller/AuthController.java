@@ -37,7 +37,7 @@ public class AuthController {
 //        );
         var user = userService.getUserByEmail(loginRequestDto.getEmail());
         var userRole = roleService.getRoleById(user.getRoleId());
-        String token = tokenHelper.generateToken(user.getEmail(), userRole.getName());
+        String token = tokenHelper.generateToken(user.getUserId(), user.getEmail(), userRole.getName());
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
