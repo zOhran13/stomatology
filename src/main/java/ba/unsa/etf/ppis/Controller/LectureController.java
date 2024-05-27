@@ -6,6 +6,7 @@ import ba.unsa.etf.ppis.dto.LectureDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,12 @@ public class LectureController {
     public ResponseEntity<List<Lecture>> getAllLectures() {
         List<Lecture> allLectures = lectureService.getAllLectures();
         return ResponseEntity.ok(allLectures);
+    }
+
+    @GetMapping("/lecture")
+    public ResponseEntity<List<Lecture>> getAllLecturesForSpeaker(@RequestParam String speakerId) {
+        var lectures = lectureService.getAllLecturesForSpeaker(speakerId);
+        return ResponseEntity.ok(lectures);
     }
 
     @DeleteMapping("/{lectureId}")

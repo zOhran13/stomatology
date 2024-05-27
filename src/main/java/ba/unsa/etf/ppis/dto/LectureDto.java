@@ -22,6 +22,9 @@ public class LectureDto {
     @Setter
     @Getter
     private String link;
+    @Getter
+    @Setter
+    private String speakerId;
 
 
 }

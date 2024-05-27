@@ -68,5 +68,9 @@ public class LectureService {
     public void deleteLecture(String lectureId) {
         lectureRepository.deleteById(lectureId);
     }
+
+    public List<Lecture> getAllLecturesForSpeaker(String dentistId) {
+        return lectureRepository.getAllBySpeakerId(dentistId);
+    }
 }
 
