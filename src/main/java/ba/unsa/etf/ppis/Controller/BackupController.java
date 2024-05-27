@@ -1,10 +1,8 @@
 package ba.unsa.etf.ppis.Controller;
 import ba.unsa.etf.ppis.Service.GoogleDriveService;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ba.unsa.etf.ppis.dto.MessageDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,24 +14,21 @@ import java.nio.file.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.io.*;
-import java.nio.file.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 import java.sql.ResultSet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collections;
+
 @RestController
 @RequestMapping("/backup")
 public class BackupController {
 
-    private static final String BACKUP_DIR = "C:\\Users\\amina\\Desktop\\Backup-baze\\";
+    private static final String BACKUP_DIR = "C:\\Users\\naimm\\Desktop\\Backup-baze\\";
     private final GoogleDriveService googleDriveService;
 
     public BackupController(GoogleDriveService googleDriveService) {
@@ -54,15 +49,17 @@ public class BackupController {
     }
 
     @GetMapping
-    public String backupOnRequest() {
+    public ResponseEntity backupOnRequest() {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             generateBackup(outputStream);
             saveBackupLocally(outputStream);
-            return "Backup saved locally successfully.";
+            MessageDto mess = new MessageDto("Backup saved locally successfully.");
+            return ResponseEntity.ok(mess);
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error during backup: " + e.getMessage();
+            MessageDto mess1 = new MessageDto("Error during backup");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mess1);
         }
     }
 
@@ -87,6 +84,30 @@ public class BackupController {
             return "Error during database restore: " + e.getMessage();
         }
     }
+
+    @GetMapping("/history")
+    public List<String> getBackupHistory() {
+        List<String> backupHistory = new ArrayList<>();
+        File backupDir = new File(BACKUP_DIR);
+        File[] files = backupDir.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    String fileName = file.getName();
+                    if (fileName.startsWith("backup_") && fileName.endsWith(".sql")) {
+                        String timestamp = fileName.substring("backup_".length(), fileName.length() - ".sql".length());
+                        backupHistory.add(timestamp);
+                    }
+                }
+            }
+        }
+
+        return backupHistory;
+    }
+
+
+
 
     private void saveBackupLocally(ByteArrayOutputStream outputStream) throws IOException {
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
