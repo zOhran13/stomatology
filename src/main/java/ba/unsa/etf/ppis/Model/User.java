@@ -23,7 +23,7 @@ public class User {
     @Setter
     @Getter
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 

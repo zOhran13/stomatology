@@ -24,8 +24,8 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable String id) {
+    @GetMapping("")
+    public ResponseEntity<UserDto> getUserById(@RequestParam String id) {
         UserDto user = userService.getUserById(id);
         return ok(user);
     }
