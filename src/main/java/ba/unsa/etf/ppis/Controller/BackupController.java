@@ -102,12 +102,8 @@ public class BackupController {
                 }
             }
         }
-
         return backupHistory;
     }
-
-
-
 
     private void saveBackupLocally(ByteArrayOutputStream outputStream) throws IOException {
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
